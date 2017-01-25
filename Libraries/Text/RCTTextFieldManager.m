@@ -116,6 +116,23 @@ RCT_CUSTOM_VIEW_PROPERTY(fontFamily, NSString, RCTTextField)
 {
   view.font = [RCTFont updateFont:view.font withFamily:json ?: defaultView.font.familyName];
 }
+RCT_CUSTOM_VIEW_PROPERTY(showDoneButton, BOOL, RCTTextField)
+{
+  if (json && ([RCTConvert BOOL:json])) {
+    UIToolbar* toolbar = [[UIToolbar alloc] init];
+    [toolbar sizeToFit];
+    UIBarButtonItem* flex = [[UIBarButtonItem alloc]
+                             initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                             target:nil action:nil];
+    UIBarButtonItem* doneButton = [[UIBarButtonItem alloc]
+                                   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                   target:view action:@selector(handleDoneButtonFromInputAccessory)];
+    toolbar.items = @[flex, doneButton];
+    view.inputAccessoryView = toolbar;
+  } else {
+    view.inputAccessoryView = nil;
+  }
+}
 RCT_EXPORT_VIEW_PROPERTY(mostRecentEventCount, NSInteger)
 
 - (RCTViewManagerUIBlock)uiBlockToAmendWithShadowView:(RCTShadowView *)shadowView

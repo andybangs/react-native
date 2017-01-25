@@ -218,6 +218,11 @@ static void RCTUpdatePlaceholder(RCTTextField *self)
   }
 }
 
+- (void)handleDoneButtonFromInputAccessory {
+    [self endEditing:YES];
+    [self textFieldSubmitEditing];
+}
+
 - (void)sendSelectionEvent
 {
   if (_onSelectionChange &&
